@@ -1,0 +1,55 @@
+.Disconnect {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.Admin {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.NavBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50px;
+  background-color: #0c0c0c;
+  color: white;
+  overflow: hidden;
+  transition: width linear 0.2s;
+
+  &:hover {
+    width: 200px;
+  }
+}
+
+
+.NavLink {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  border: none;
+  outline: none;
+  background: none;
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+    background-color: black;
+  }
+
+  & > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .NavLink__Icon {
+    width: 50px;
+  }
+}
