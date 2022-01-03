@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const {Room} = require("./models/Room");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,17 +36,29 @@ app.get("/api/admin", withAuth, (req, res) => {
     res.status(200).send("Successfully connected");
 });
 
-app.post("/api/admin/auth", (req, res) => {
+app.post("/api/admin/auth", async (req, res) => {
     if (req.body.password == process.env.ADMIN_PASSWORD) {
         const token = jwt.sign({ isAdmin: true }, secret);
-        res.cookie("token", token).sendStatus(200);
+        res.cookie("token", token);
+        res.cookie("roomId", req.body.roomId);
+
+        if (!Room.findById(req.body.roomId)) {
+            await Room.create({
+                id: req.body.roomId
+            });
+        }
+
+        res.sendStatus(200);
     } else {
         res.status(401).send("Unauthorized");
     }
 });
 
 app.post("/api/admin/logout", (req, res) => {
-    res.cookie("token", undefined).sendStatus(200);
+    res.cookie("token", undefined);
+    res.cookie("roomId", undefined);
+
+    res.sendStatus(200);
 });
 
 app.listen(8080);

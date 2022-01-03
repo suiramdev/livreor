@@ -20,7 +20,7 @@ class UserAuth extends React.Component {
                     <div>
                         <div className="Field">
                             <Pin/>
-                            <input type="text" placeholder="Code de session" limi/>
+                            <input type="text" placeholder="Code de session"/>
                             <span className="Field__Help">
                                 Entrez le code affiché sur l'écran de l'évenement
                                 <img src="doodle_arrow.png" alt="Help arrow"/>
