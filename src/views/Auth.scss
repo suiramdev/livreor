@@ -18,11 +18,11 @@
   flex-direction: column;
   justify-content: center;
 
-  & > div {
+  > div:not(.Field) {
     display: flex;
     grid-gap: 1rem;
 
-    & > div {
+    > div {
       flex: 1;
     }
   }
@@ -35,6 +35,9 @@
 
 .Field {
   position: relative;
+  &:not(button) {
+    height: 28px;
+  }
   display: flex;
   align-items: center;
   grid-gap: 8px;
@@ -68,7 +71,7 @@
     opacity: 0;
     transition: opacity linear 0.3s;
 
-    & > img {
+    > img {
       width: 50%;
       position: absolute;
       right: 25%;
@@ -99,7 +102,7 @@
   color: white;
   font-size: 1.1rem;
 
-  & > span {
+  > span {
     transform: translateY(-6px);
     display: flex;
     justify-content: center;

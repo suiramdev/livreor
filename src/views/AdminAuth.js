@@ -27,6 +27,10 @@ const AdminAuth = () => {
                     <div className="Field">
                         <Pin/>
                         <input type="text" placeholder="Code de session" ref={roomIdInput}/>
+                        <span className="Field__Help">
+                            Entrez le code affiché sur l'écran de l'évenement
+                            <img src="doodle_arrow.png" alt="Help arrow"/>
+                        </span>
                     </div>
                     <button className="Field" onClick={() => alert("Non disponible :(")}>
                         <QrCode/>
@@ -41,6 +45,10 @@ const AdminAuth = () => {
                        onMouseLeave={() => setShowPassword(false)}>
                         {showPassword ? (<Visibility/>) : <VisibilityOff/>}
                     </a>
+                    <span className="Field__Help">
+                        Entrez le mot de passe qui vous a été donné par l'administrateur
+                        <img src="doodle_arrow.png" alt="Help arrow"/>
+                    </span>
                 </div>
                 <button className="Submit" type="submit">
                     <span><Login/> Se connecter</span>

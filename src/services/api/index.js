@@ -3,7 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-const {Room} = require("./models/Room");
+require("mongoose").connect(process.env.MONGO_URL);
+const Room = require("./models/Room");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -42,11 +43,10 @@ app.post("/api/admin/auth", async (req, res) => {
         res.cookie("token", token);
         res.cookie("roomId", req.body.roomId);
 
-        if (!Room.findById(req.body.roomId)) {
+        if (!await Room.exists({roomId: req.body.roomId}))
             await Room.create({
-                id: req.body.roomId
+                roomId: req.body.roomId
             });
-        }
 
         res.sendStatus(200);
     } else {

@@ -2,54 +2,162 @@
   position: absolute;
   top: 10px;
   left: 10px;
+  border: none;
+  outline: none;
+  background: none;
+  color: whitesmoke;
+  > svg {
+    font-size: 2.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .Admin {
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.NavBar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 50px;
-  background-color: #0c0c0c;
-  color: white;
   overflow: hidden;
-  transition: width linear 0.2s;
-
-  &:hover {
-    width: 200px;
-  }
 }
 
+.CardList {
+  position: relative;
+  min-width: 350px;
+  min-height: 450px;
+}
 
-.NavLink {
-  height: 50px;
+.Card {
+  position: absolute;
   width: 100%;
-  display: flex;
-  border: none;
-  outline: none;
-  background: none;
-  color: white;
+  height: 100%;
+  border-radius: 12px;
+  background: black;
+  color: black;
+  overflow: hidden;
 
-  &:hover {
-    cursor: pointer;
-    background-color: black;
+  &:first-child {
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
   }
 
-  & > div {
+  &:hover {
+    cursor: grab;
+  }
+
+  > div  {
     height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    background-position: center;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      border-radius: 12px 12px 0 0;
+      background: whitesmoke;
+    }
   }
 
-  .NavLink__Icon {
-    width: 50px;
+  &__Author {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  &__Fullscreen {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    outline: none;
+    color: inherit;
+    background: none;
+    > svg {
+      font-size: 2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+      > svg {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.CardButtons {
+  display: flex;
+  grid-gap: 1rem;
+  margin-top: 2rem;
+
+  > button {
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    background: whitesmoke;
+    color: #4e4ee3;
+
+    &:first-child {
+      color: #e54747;
+    }
+
+    &:last-child {
+      color: #49ef49;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #e7e7e7;
+      transition: background-color 0.2s linear;
+    }
+  }
+}
+
+.CardPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+
+  & > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 75%;
+    border: 2px solid whitesmoke;
+    background: whitesmoke;
+    color: black;
+    overflow: hidden;
+
+    & > img {
+      width: 100%;
+    }
+  }
+
+  &__Close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    outline: none;
+    background: none;
+    color: inherit;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

@@ -1,12 +1,11 @@
-import {model, Schema} from "mongoose";
+const mongoose = require("mongoose");
 
-const MRoom = new Schema({
-    _id: false,
-    id: {
+const Room = new mongoose.Schema({
+    roomId: {
         type: String,
         unique: true,
         required: true
     }
 });
 
-export const Room = model("Room", MRoom);
+module.exports = mongoose.model("Room", Room);
