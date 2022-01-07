@@ -1,9 +1,9 @@
-import React, {useMemo, useRef, useState} from "react";
+import React, {useMemo, useState} from "react";
 import axios from "axios";
 import "./Admin.scss";
 import {useNavigate} from "react-router-dom";
 import TinderCard from "react-tinder-card";
-import {Close, CloudDone, CloudOff, Delete, Fullscreen, Logout, SmartDisplay} from "@mui/icons-material";
+import {Close, CloudDone, CloudOff, Delete, Fullscreen, Logout} from "@mui/icons-material";
 
 const content = [
     {
@@ -29,7 +29,7 @@ const Admin = () => {
     const cardRefs = useMemo(() => Array(content.length).fill(0).map(React.createRef), [])
     const [cardFullscreen, setCardFullscreen] = useState(false);
 
-    async function disconnect(event) {
+    async function disconnect() {
         await axios.post("api/admin/logout");
         navigate(0);
     }
