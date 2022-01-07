@@ -11,7 +11,7 @@ class UserAuth extends React.Component {
                 <div className="Auth__Form">
                     <div className="Field">
                         <Person/>
-                        <input type="text" placeholder="Pseudo"/>
+                        <input type="text" placeholder="Pseudo" required/>
                         <span className="Field__Help">
                             Entrez votre nom ou surnom
                             <img src="doodle_arrow.png" alt="Help arrow"/>
@@ -20,7 +20,7 @@ class UserAuth extends React.Component {
                     <div>
                         <div className="Field">
                             <Pin/>
-                            <input type="text" placeholder="Code de session"/>
+                            <input type="text" placeholder="Code de session" required/>
                             <span className="Field__Help">
                                 Entrez le code affiché sur l'écran de l'évenement
                                 <img src="doodle_arrow.png" alt="Help arrow"/>

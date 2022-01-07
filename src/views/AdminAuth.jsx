@@ -26,7 +26,7 @@ const AdminAuth = () => {
                 <div>
                     <div className="Field">
                         <Pin/>
-                        <input type="text" placeholder="Code de session" ref={roomIdInput}/>
+                        <input type="text" placeholder="Code de session" ref={roomIdInput} required/>
                         <span className="Field__Help">
                             Entrez le code affiché sur l'écran de l'évenement
                             <img src="doodle_arrow.png" alt="Help arrow"/>
@@ -38,7 +38,7 @@ const AdminAuth = () => {
                 </div>
                 <div className="Field">
                     <Key/>
-                    <input type={showPassword ? "text" : "password"} placeholder="Mot de passe" ref={passwordInput}/>
+                    <input type={showPassword ? "text" : "password"} placeholder="Mot de passe" ref={passwordInput} required/>
                     <a className="Field__Visibility"
                        onMouseDown={() => setShowPassword(true)}
                         onMouseUp={() => setShowPassword(false)}
