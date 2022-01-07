@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Admin.scss";
 import {useNavigate} from "react-router-dom";
 import TinderCard from "react-tinder-card";
-import {Close, CloudDone, CloudOff, Delete, Fullscreen, Logout} from "@mui/icons-material";
+import {Close, CloudDone, CloudOff, Delete, Fullscreen, Logout, Undo} from "@mui/icons-material";
 
 const content = [
     {
@@ -59,9 +59,17 @@ const Admin = () => {
                 ))}
             </div>
             <div className="CardButtons">
-                <button onClick={() => cardRefs[swipeIndex].current.swipe("left")}><Delete/></button>
-                <button onClick={() => cardRefs[swipeIndex].current.swipe("up")}><CloudOff/></button>
-                <button onClick={() => cardRefs[swipeIndex].current.swipe("right")}><CloudDone/></button>
+                <button className="CardButton CardButton-undo"
+                        onClick={() => {
+                            cardRefs[swipeIndex+1].current.restoreCard();
+                            setSwipeIndex(swipeIndex+1);
+                        }}><Undo/></button>
+                <button className="CardButton CardButton-delete"
+                        onClick={() => cardRefs[swipeIndex].current.swipe("left")}><Delete/></button>
+                <button className="CardButton CardButton-mid"
+                        onClick={() => cardRefs[swipeIndex].current.swipe("up")}><CloudOff/></button>
+                <button className="CardButton CardButton-like"
+                        onClick={() => cardRefs[swipeIndex].current.swipe("right")}><CloudDone/></button>
             </div>
             {cardFullscreen && (
                 <div className="CardPopup">

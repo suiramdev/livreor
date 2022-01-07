@@ -98,7 +98,7 @@
   grid-gap: 1rem;
   margin-top: 2rem;
 
-  > button {
+  .CardButton {
     width: 65px;
     height: 65px;
     border: none;
@@ -107,11 +107,15 @@
     background: whitesmoke;
     color: #4e4ee3;
 
-    &:first-child {
+    &-undo {
+      color: #ffb63a;
+    }
+
+    &-delete {
       color: #e54747;
     }
 
-    &:last-child {
+    &-like {
       color: #49ef49;
     }
 
