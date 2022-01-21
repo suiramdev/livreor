@@ -1,9 +1,22 @@
-import React, {useMemo, useState} from "react";
-import axios from "axios";
+import React, {useMemo, useReducer} from "react";
 import "./Admin.scss";
+import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import TinderCard from "react-tinder-card";
-import {Close, CloudDone, CloudOff, Delete, Fullscreen, Logout, Undo} from "@mui/icons-material";
+import {Box, Button, Divider, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer} from "@mui/material";
+import {
+    Book,
+    Close,
+    CloudDone,
+    CloudOff,
+    Delete,
+    Fullscreen,
+    Logout,
+    Menu,
+    SmartDisplay,
+    Undo
+} from "@mui/icons-material";
+import TinderCardButton from "../components/TinderCardButton";
 
 const content = [
     {
@@ -25,9 +38,15 @@ const content = [
 
 const Admin = () => {
     const navigate = useNavigate();
-    const [swipeIndex, setSwipeIndex] = useState(content.length - 1);
+    const [state, setState] = useReducer(
+        (state, newState) => ({...state, ...newState}),
+        {
+            swipeIndex: content.length - 1,
+            cardFullscreen: false,
+            drawer: false
+        }
+    );
     const cardRefs = useMemo(() => Array(content.length).fill(0).map(React.createRef), [])
-    const [cardFullscreen, setCardFullscreen] = useState(false);
 
     async function disconnect() {
         await axios.post("api/admin/logout");
@@ -35,51 +54,81 @@ const Admin = () => {
     }
 
     function onSwipe(index) {
-        setSwipeIndex(index - 1);
+        setState({swipeIndex: index -1});
     }
 
     return (
-        <div className="Admin">
-            <button className="Disconnect" onClick={disconnect}><Logout/></button>
-            <div className="CardList">
-                {content.map((c, i) => (
-                    <TinderCard preventSwipe={["down"]}
-                                className="Card"
-                                onSwipe={() => onSwipe(i)}
-                                ref={cardRefs[i]}
-                                key={i}>
-                        <div style={{backgroundImage: "url("+c.image+")"}}>
-                            <div>
-                                <span className="Card__Author">{c.author}</span>
-                                <span className="Card__Message">{c.message}</span>
-                            </div>
-                            <button className="Card__Fullscreen" onClick={() => setCardFullscreen(true)}><Fullscreen/></button>
-                        </div>
-                    </TinderCard>
-                ))}
-            </div>
-            <div className="CardButtons">
-                <button className="CardButton CardButton-undo"
-                        onClick={() => {
-                            cardRefs[swipeIndex+1].current.restoreCard();
-                            setSwipeIndex(swipeIndex+1);
-                        }}><Undo/></button>
-                <button className="CardButton CardButton-delete"
-                        onClick={() => cardRefs[swipeIndex].current.swipe("left")}><Delete/></button>
-                <button className="CardButton CardButton-mid"
-                        onClick={() => cardRefs[swipeIndex].current.swipe("up")}><CloudOff/></button>
-                <button className="CardButton CardButton-like"
-                        onClick={() => cardRefs[swipeIndex].current.swipe("right")}><CloudDone/></button>
-            </div>
-            {cardFullscreen && (
-                <div className="CardPopup">
-                    <div>
-                        <img src={content[swipeIndex].image}/>
-                        <button className="CardPopup__Close" onClick={() => setCardFullscreen(false)}><Close/></button>
-                    </div>
+        <>
+            <div className="Admin">
+                <button className="Drawer" onClick={() => setState({drawer: true})}><Menu/></button>
+                <div className="CardList">
+                    {content.map((c, i) => (
+                        <TinderCard preventSwipe={["down"]}
+                                    className="Card"
+                                    onSwipe={() => onSwipe(i)}
+                                    ref={cardRefs[i]}
+                                    key={i}>
+                            <Box style={{backgroundImage: "url("+c.image+")"}}>
+                                <Box>
+                                    <span className="Card__Author">{c.author}</span>
+                                    <span className="Card__Message">{c.message}</span>
+                                </Box>
+                                <button className="Card__Fullscreen" onClick={() => setState({cardFullscreen: true})}><Fullscreen/></button>
+                            </Box>
+                        </TinderCard>
+                    ))}
                 </div>
-            )}
-        </div>
+                <div className="CardButtons">
+                    <TinderCardButton action="undo"
+                                      onClick={() => {
+                                          cardRefs[state.swipeIndex+1].current.restoreCard();
+                                          setState({swipeIndex: state.swipeIndex+1});
+                                      }}><Undo/></TinderCardButton>
+                    <TinderCardButton action="delete"
+                                      onClick={() => cardRefs[state.swipeIndex].current.swipe("left")}><Delete/></TinderCardButton>
+                    <TinderCardButton action="mid"
+                                      onClick={() => cardRefs[state.swipeIndex].current.swipe("up")}><CloudOff/></TinderCardButton>
+                    <TinderCardButton action="like"
+                                      onClick={() => cardRefs[state.swipeIndex].current.swipe("right")}><CloudDone/></TinderCardButton>
+                </div>
+                {state.cardFullscreen && (
+                    <div className="CardPopup">
+                        <div>
+                            <img src={content[state.swipeIndex].image}/>
+                            <button className="CardPopup__Close" onClick={() => setState({cardFullscreen: false})}><Close/></button>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <SwipeableDrawer anchor="left" open={state.drawer}
+                             onClose={() => setState({drawer: false})}>
+                <Box sx={{width: 300}}>
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <SmartDisplay/>
+                            </ListItemIcon>
+                            <ListItemText primary="Affichage"/>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <Book/>
+                            </ListItemIcon>
+                            <ListItemText primary="Créer un livre d'or"/>
+                        </ListItem>
+                    </List>
+                    <Divider/>
+                    <List>
+                        <ListItem button onClick={disconnect}>
+                            <ListItemIcon>
+                                <Logout/>
+                            </ListItemIcon>
+                            <ListItemText primary="Se déconnecter"/>
+                        </ListItem>
+                    </List>
+                </Box>
+            </SwipeableDrawer>
+        </>
     )
 }
 

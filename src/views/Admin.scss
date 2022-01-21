@@ -1,20 +1,3 @@
-.Disconnect {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  border: none;
-  outline: none;
-  background: none;
-  color: whitesmoke;
-  > svg {
-    font-size: 2.5rem;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .Admin {
   width: 100vw;
   height: 100vh;
@@ -23,6 +6,25 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+
+  button.Drawer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border: none;
+    outline: none;
+    background: none;
+    color: whitesmoke;
+
+    > svg {
+      font-size: 2.5rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .CardList {
@@ -101,10 +103,7 @@
   .CardButton {
     width: 65px;
     height: 65px;
-    border: none;
     border-radius: 50px;
-    outline: none;
-    background: whitesmoke;
     color: #4e4ee3;
 
     &-undo {
@@ -117,12 +116,6 @@
 
     &-like {
       color: #49ef49;
-    }
-
-    &:hover {
-      cursor: pointer;
-      background-color: #e7e7e7;
-      transition: background-color 0.2s linear;
     }
   }
 }
